@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Sinks — Esport Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #7B2FFF;
+    --primary-light: #A060FF;
+    --accent: #00D4FF;
+    --silver: #C0C8D8;
+    --silver-dark: #8090AA;
+    --dark: #04030D;
+    --dark2: #080618;
+    --dark3: #0D0A22;
+    --card: #0A0819;
+    --border: rgba(123, 47, 255, 0.25);
+    --border-accent: rgba(0, 212, 255, 0.3);
+    --glow: rgba(123, 47, 255, 0.4);
+    --glow-accent: rgba(0, 212, 255, 0.3);
+    --font-display: 'Orbitron', monospace;
+    --font-body: 'Exo 2', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--dark);
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
+  /* ── STARS BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 8%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 80% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 35% 65%, rgba(200,180,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 50%, rgba(180,220,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 30%, rgba(255,255,255,0.6) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 70px;
+    background: rgba(4, 3, 13, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 42px; height: 42px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .logo-icon svg { width: 42px; height: 42px; }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 900;
+    letter-spacing: 3px; text-transform: uppercase;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--primary-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--silver-dark); text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #fff; text-decoration: none;
+    padding: 10px 22px;
+    border: 1px solid var(--primary);
+    background: rgba(123, 47, 255, 0.15);
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .nav-cta:hover {
+    background: var(--primary);
+    box-shadow: 0 0 20px var(--glow);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 100px 3rem 4rem;
+  }
+
+  .hero-nebula {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(123,47,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 30%, rgba(0,212,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(75,0,180,0.1) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(123,47,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(123,47,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;
+  }
+
+  .eyebrow-line { width: 40px; height: 1px; background: var(--accent); }
+
+  .eyebrow-text {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: 64px; font-weight: 900; line-height: 0.95;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+
+  .hero-title .line1 { display: block; color: var(--silver); font-size: 28px; letter-spacing: 6px; }
+  .hero-title .line2 {
+    display: block;
+    background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-title .line3 { display: block; color: var(--silver); font-size: 28px; letter-spacing: 8px; }
+
+  .hero-desc {
+    font-size: 15px; color: var(--silver-dark); line-height: 1.8;
+    margin-bottom: 2.5rem; max-width: 440px;
+  }
+
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #fff; text-decoration: none;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border: none; cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s; display: inline-block;
+    box-shadow: 0 0 30px rgba(123,47,255,0.4);
+  }
+
+  .btn-primary:hover { box-shadow: 0 0 50px rgba(123,47,255,0.7); transform: translateY(-2px); }
+
+  .btn-secondary {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); text-decoration: none;
+    padding: 13px 32px;
+    background: transparent;
+    border: 1px solid var(--border-accent);
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s; display: inline-block;
+  }
+
+  .btn-secondary:hover { background: rgba(0,212,255,0.1); box-shadow: 0 0 20px var(--glow-accent); }
+
+  /* ROCKET VISUAL */
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(123,47,255,0.15);
+    animation: spin linear infinite;
+  }
+
+  .orbit-ring:nth-child(1) { width: 420px; height: 420px; animation-duration: 20s; }
+  .orbit-ring:nth-child(2) { width: 320px; height: 320px; animation-duration: 15s; animation-direction: reverse; border-color: rgba(0,212,255,0.12); }
+  .orbit-ring:nth-child(3) { width: 220px; height: 220px; animation-duration: 10s; }
+
+  .orbit-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    position: absolute; top: -3px; left: 50%; margin-left: -3px;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .orbit-dot-2 {
+    background: var(--primary-light);
+    box-shadow: 0 0 10px var(--primary-light);
+    top: auto; bottom: -3px;
+  }
+
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .car-wrapper {
+    position: relative; z-index: 2;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-5deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent), var(--primary-light), var(--primary));
+    padding: 12px 0; overflow: hidden; white-space: nowrap; position: relative; z-index: 10;
+  }
+
+  .ticker-inner {
+    display: inline-flex; gap: 4rem;
+    animation: ticker 25s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+  }
+
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 3rem; position: relative; z-index: 1; }
+
+  .section-header { margin-bottom: 4rem; }
+
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;
+  }
+
+  .section-eyebrow span {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase;
+  }
+
+  .eyebrow-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 42px; font-weight: 900; text-transform: uppercase; line-height: 1.1;
+  }
+
+  .section-title .highlight {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ── STATS ── */
+  .stats-section { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+
+  .stat-card {
+    padding: 3rem 2rem; text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .stat-card:last-child { border-right: none; }
+  .stat-card:hover { background: rgba(123,47,255,0.05); }
+
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 52px; font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #fff, var(--primary-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    color: var(--silver-dark); text-transform: uppercase;
+  }
+
+  /* ── TEAM ── */
+  .team-section { background: var(--dark3); }
+
+  .players-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+
+  .player-card {
+    background: var(--card); position: relative; overflow: hidden;
+    cursor: pointer; transition: transform 0.3s;
+  }
+
+  .player-card:hover { transform: translateY(-6px); z-index: 2; }
+
+  .player-card:hover .player-overlay { opacity: 1; }
+  .player-card:hover .player-glow { opacity: 1; }
+
+  .player-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(123,47,255,0.3) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .player-avatar {
+    height: 260px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #0d0a22, #080618);
+    position: relative; overflow: hidden;
+  }
+
+  .player-avatar::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(transparent, var(--card));
+  }
+
+  .player-avatar svg { width: 120px; height: 160px; }
+
+  .player-role-badge {
+    position: absolute; top: 16px; right: 16px;
+    font-family: var(--font-display);
+    font-size: 8px; font-weight: 700; letter-spacing: 2px;
+    color: var(--accent); text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-accent);
+    background: rgba(0,212,255,0.08);
+  }
+
+  .player-body { padding: 1.5rem; }
+
+  .player-tag {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 900; letter-spacing: 1px;
+    color: #fff; margin-bottom: 4px;
+  }
+
+  .player-real { font-size: 12px; color: var(--silver-dark); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+
+  .player-stats { display: flex; gap: 1.5rem; }
+
+  .player-stat-item { }
+  .player-stat-val { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--primary-light); }
+  .player-stat-lbl { font-size: 9px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
+
+  .player-overlay {
+    position: absolute; inset: 0;
+    border: 2px solid var(--primary);
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  /* ── ABOUT ROCKET LEAGUE ── */
+  .about-section { }
+
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+
+  .about-visual { position: relative; }
+
+  .rl-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    position: relative; overflow: hidden;
+  }
+
+  .rl-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+
+  .rl-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+
+  .rl-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  .rl-title-wrap h3 {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 900; letter-spacing: 2px;
+  }
+
+  .rl-title-wrap p { font-size: 12px; color: var(--silver-dark); margin-top: 2px; }
+
+  .rl-rank {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 0; border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  .rank-label { font-size: 11px; color: var(--silver-dark); letter-spacing: 2px; text-transform: uppercase; }
+
+  .rank-value {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .progress-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 1s ease; }
+
+  .about-content .section-title { margin-bottom: 1.5rem; }
+
+  .about-content p { font-size: 15px; color: var(--silver-dark); line-height: 1.9; margin-bottom: 1.5rem; }
+
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 1rem;
+    background: rgba(123,47,255,0.05);
+    border: 1px solid var(--border);
+  }
+
+  .feature-icon { font-size: 20px; flex-shrink: 0; }
+  .feature-text h4 { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #fff; margin-bottom: 4px; }
+  .feature-text p { font-size: 12px; color: var(--silver-dark); line-height: 1.5; }
+
+  /* ── RECRUTEMENT ── */
+  .recruit-section {
+    background: var(--dark2);
+    border-top: 1px solid var(--border);
+  }
+
+  .recruit-banner {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, rgba(123,47,255,0.15) 0%, rgba(0,212,255,0.08) 100%);
+    border: 1px solid var(--border);
+    padding: 4rem;
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+    display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+  }
+
+  .recruit-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(123,47,255,0.1) 0%, transparent 60%);
+  }
+
+  .recruit-text { position: relative; z-index: 1; }
+  .recruit-text h2 { font-family: var(--font-display); font-size: 36px; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
+  .recruit-text p { font-size: 15px; color: var(--silver-dark); line-height: 1.7; max-width: 500px; }
+
+  .recruit-cta { position: relative; z-index: 1; flex-shrink: 0; }
+
+  /* ── CONTACT ── */
+  .contact-section { }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+
+  .contact-form { }
+  .contact-form h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 2rem; letter-spacing: 2px; }
+
+  .form-group { margin-bottom: 1.5rem; }
+
+  .form-group label {
+    display: block; font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 12px 16px;
+    background: rgba(123,47,255,0.06);
+    border: 1px solid var(--border);
+    color: #fff; font-family: var(--font-body); font-size: 14px;
+    outline: none; transition: border-color 0.3s;
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--primary-light); background: rgba(123,47,255,0.1); }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-group select option { background: #0d0a22; color: #fff; }
+
+  .contact-info h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 2rem; letter-spacing: 2px; }
+
+  .social-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+  .social-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    text-decoration: none; color: #fff;
+    transition: all 0.3s;
+  }
+
+  .social-item:hover { border-color: var(--primary-light); background: rgba(123,47,255,0.1); transform: translateX(6px); }
+
+  .social-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+
+  .social-icon.tw { background: rgba(29,161,242,0.15); }
+  .social-icon.yt { background: rgba(255,0,0,0.15); }
+  .social-icon.dc { background: rgba(88,101,242,0.15); }
+  .social-icon.ig { background: rgba(193,53,132,0.15); }
+  .social-icon.tt { background: rgba(0,0,0,0.3); border: 1px solid #333; }
+
+  .social-text h4 { font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 2px; }
+  .social-text p { font-size: 12px; color: var(--silver-dark); }
+
+  .social-arrow { margin-left: auto; color: var(--silver-dark); font-size: 18px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #020209;
+    border-top: 1px solid var(--border);
+    padding: 4rem 3rem 2rem;
+    position: relative; z-index: 1;
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 3rem;
+  }
+
+  .footer-brand p {
+    font-size: 13px; color: #444; line-height: 1.8; margin-top: 1rem; max-width: 280px;
+  }
+
+  .footer-logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .footer-logo-text { font-family: var(--font-display); font-size: 14px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .footer-col h4 {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700; letter-spacing: 3px;
+    color: var(--silver-dark); text-transform: uppercase; margin-bottom: 1.25rem;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 13px; color: #444; text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.04);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-copy { font-size: 12px; color: #333; }
+
+  .footer-socials { display: flex; gap: 0.75rem; }
+
+  .fsocial {
+    width: 34px; height: 34px;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 9px; font-weight: 700;
+    color: #444; text-decoration: none; transition: all 0.2s;
+  }
+
+  .fsocial:hover { border-color: var(--primary); color: var(--primary-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content > * {
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero-title { animation-delay: 0.3s; }
+  .hero-desc { animation-delay: 0.5s; }
+  .hero-buttons { animation-delay: 0.7s; }
+
+  .hero-visual { animation: fadeInUp 1s ease 0.4s forwards; opacity: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-title { font-size: 44px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-card:nth-child(2) { border-right: none; }
+    .players-grid { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    section { padding: 4rem 1.5rem; }
+    .recruit-banner { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="21,2 40,12 40,30 21,40 2,30 2,12" fill="none" stroke="url(#hexgrad)" stroke-width="1.5"/>
+        <text x="21" y="26" text-anchor="middle" fill="url(#textgrad)" font-family="Orbitron,monospace" font-size="13" font-weight="900">GS</text>
+        <defs>
+          <linearGradient id="hexgrad" x1="0" y1="0" x2="42" y2="42">
+            <stop offset="0%" stop-color="#7B2FFF"/>
+            <stop offset="100%" stop-color="#00D4FF"/>
+          </linearGradient>
+          <linearGradient id="textgrad" x1="0" y1="0" x2="42" y2="42">
+            <stop offset="0%" stop-color="#A060FF"/>
+            <stop offset="100%" stop-color="#00D4FF"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <span class="logo-text">Galaxy Sinks</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#team">Équipe</a></li>
+    <li><a href="#about">Rocket League</a></li>
+    <li><a href="#recruit">Recrutement</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#recruit">Rejoindre</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-nebula"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Team Esport — Rocket League</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">TEAM</span>
+        <span class="line2">GALAXY</span>
+        <span class="line3">SINKS</span>
+      </h1>
+      <p class="hero-desc">
+        Propulsés au-delà des limites de la galaxie. Une équipe, un objectif : dominer les arènes Rocket League et inscrire notre nom parmi les étoiles.
+      </p>
+      <div class="hero-buttons">
+        <a href="#team" class="btn-primary">Voir l'équipe</a>
+        <a href="#recruit" class="btn-secondary">Nous rejoindre</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring"><div class="orbit-dot orbit-dot-2"></div></div>
+      <div class="orbit-ring"><div class="orbit-dot"></div></div>
+      <div class="car-wrapper">
+        <svg width="200" height="180" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Car body -->
+          <ellipse cx="100" cy="155" rx="75" ry="8" fill="rgba(123,47,255,0.2)"/>
+          <path d="M30 110 L35 75 Q40 60 55 55 L90 48 L100 42 L110 48 L145 55 Q160 60 165 75 L170 110 Z" fill="url(#cargrad)"/>
+          <path d="M40 110 L45 78 Q50 68 62 64 L90 58 L100 52 L110 58 L138 64 Q150 68 155 78 L160 110 Z" fill="url(#cargrad2)" opacity="0.9"/>
+          <!-- Windshield -->
+          <path d="M65 80 L70 62 Q72 57 78 55 L100 50 L122 55 Q128 57 130 62 L135 80 Z" fill="rgba(0,212,255,0.15)" stroke="rgba(0,212,255,0.5)" stroke-width="1"/>
+          <!-- Wheels -->
+          <ellipse cx="55" cy="115" rx="22" ry="12" fill="#1a1040" stroke="url(#wheelgrad)" stroke-width="2"/>
+          <ellipse cx="55" cy="115" rx="14" ry="8" fill="#0a0818"/>
+          <ellipse cx="55" cy="115" rx="6" ry="3" fill="url(#wheelgrad)"/>
+          <ellipse cx="145" cy="115" rx="22" ry="12" fill="#1a1040" stroke="url(#wheelgrad)" stroke-width="2"/>
+          <ellipse cx="145" cy="115" rx="14" ry="8" fill="#0a0818"/>
+          <ellipse cx="145" cy="115" rx="6" ry="3" fill="url(#wheelgrad)"/>
+          <!-- Boost flame -->
+          <path d="M85 108 Q100 120 115 108 Q110 135 100 145 Q90 135 85 108Z" fill="url(#flamegrad)" opacity="0.8"/>
+          <path d="M90 108 Q100 118 110 108 Q107 128 100 136 Q93 128 90 108Z" fill="rgba(255,255,255,0.6)" opacity="0.6"/>
+          <!-- GS logo on car -->
+          <text x="100" y="90" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="Orbitron,monospace" font-size="14" font-weight="900">GS</text>
+          <!-- Glow lines -->
+          <line x1="30" y1="110" x2="170" y2="110" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
+          <defs>
+            <linearGradient id="cargrad" x1="100" y1="42" x2="100" y2="110" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#A060FF"/>
+              <stop offset="100%" stop-color="#4a1fa0"/>
+            </linearGradient>
+            <linearGradient id="cargrad2" x1="100" y1="50" x2="100" y2="110" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#7B2FFF" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#0d0a22" stop-opacity="0.8"/>
+            </linearGradient>
+            <linearGradient id="wheelgrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7B2FFF"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </linearGradient>
+            <linearGradient id="flamegrad" x1="100" y1="108" x2="100" y2="145" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="50%" stop-color="#7B2FFF"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">★ GALAXY SINKS ESPORT</span>
+    <span class="ticker-item">★ ROCKET LEAGUE COMPETITIVE</span>
+    <span class="ticker-item">★ SEASON 2026</span>
+    <span class="ticker-item">★ V FOR VICTORY</span>
+    <span class="ticker-item">★ BEYOND THE GALAXY</span>
+    <span class="ticker-item">★ GALAXY SINKS ESPORT</span>
+    <span class="ticker-item">★ ROCKET LEAGUE COMPETITIVE</span>
+    <span class="ticker-item">★ SEASON 2026</span>
+    <span class="ticker-item">★ V FOR VICTORY</span>
+    <span class="ticker-item">★ BEYOND THE GALAXY</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Joueurs actifs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Discipline</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Saison en cours</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ambition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span>Roster officiel</span>
+      </div>
+      <h2 class="section-title">NOS <span class="highlight">JOUEURS</span></h2>
+    </div>
+    <div class="players-grid">
+      <div class="player-card">
+        <div class="player-avatar">
+          <svg viewBox="0 0 120 160" fill="none">
+            <ellipse cx="60" cy="140" rx="45" ry="15" fill="rgba(123,47,255,0.2)"/>
+            <rect x="30" y="75" width="60" height="65" rx="4" fill="#1a1040"/>
+            <rect x="15" y="85" width="18" height="45" rx="4" fill="#150d35"/>
+            <rect x="87" y="85" width="18" height="45" rx="4" fill="#150d35"/>
+            <circle cx="60" cy="55" r="28" fill="#1e1248"/>
+            <circle cx="60" cy="50" r="22" fill="#251560"/>
+            <text x="60" y="57" text-anchor="middle" fill="url(#pg1)" font-family="Orbitron,monospace" font-size="16" font-weight="900">P1</text>
+            <defs><linearGradient id="pg1" x1="0" y1="0" x2="120" y2="0"><stop offset="0%" stop-color="#A060FF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="player-role-badge">Attaquant</div>
+        <div class="player-glow"></div>
+        <div class="player-overlay"></div>
+        <div class="player-body">
+          <p class="player-tag">JOUEUR 1</p>
+          <p class="player-real">Prénom Nom</p>
+          <div class="player-stats">
+            <div class="player-stat-item">
+              <div class="player-stat-val">GC</div>
+              <div class="player-stat-lbl">Rang</div>
+            </div>
+            <div class="player-stat-item">
+              <div class="player-stat-val">—</div>
+              <div class="player-stat-lbl">Buts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="player-card">
+        <div class="player-avatar">
+          <svg viewBox="0 0 120 160" fill="none">
+            <ellipse cx="60" cy="140" rx="45" ry="15" fill="rgba(0,212,255,0.15)"/>
+            <rect x="30" y="75" width="60" height="65" rx="4" fill="#0a1a30"/>
+            <rect x="15" y="85" width="18" height="45" rx="4" fill="#081525"/>
+            <rect x="87" y="85" width="18" height="45" rx="4" fill="#081525"/>
+            <circle cx="60" cy="55" r="28" fill="#0d1f3a"/>
+            <circle cx="60" cy="50" r="22" fill="#102545"/>
+            <text x="60" y="57" text-anchor="middle" fill="url(#pg2)" font-family="Orbitron,monospace" font-size="16" font-weight="900">P2</text>
+            <defs><linearGradient id="pg2" x1="0" y1="0" x2="120" y2="0"><stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#A060FF"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="player-role-badge">Défenseur</div>
+        <div class="player-glow"></div>
+        <div class="player-overlay"></div>
+        <div class="player-body">
+          <p class="player-tag">JOUEUR 2</p>
+          <p class="player-real">Prénom Nom</p>
+          <div class="player-stats">
+            <div class="player-stat-item">
+              <div class="player-stat-val">GC</div>
+              <div class="player-stat-lbl">Rang</div>
+            </div>
+            <div class="player-stat-item">
+              <div class="player-stat-val">—</div>
+              <div class="player-stat-lbl">Saves</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="player-card">
+        <div class="player-avatar">
+          <svg viewBox="0 0 120 160" fill="none">
+            <ellipse cx="60" cy="140" rx="45" ry="15" fill="rgba(192,200,216,0.1)"/>
+            <rect x="30" y="75" width="60" height="65" rx="4" fill="#1a1828"/>
+            <rect x="15" y="85" width="18" height="45" rx="4" fill="#141220"/>
+            <rect x="87" y="85" width="18" height="45" rx="4" fill="#141220"/>
+            <circle cx="60" cy="55" r="28" fill="#1e1c30"/>
+            <circle cx="60" cy="50" r="22" fill="#252240"/>
+            <text x="60" y="57" text-anchor="middle" fill="url(#pg3)" font-family="Orbitron,monospace" font-size="16" font-weight="900">P3</text>
+            <defs><linearGradient id="pg3" x1="0" y1="0" x2="120" y2="0"><stop offset="0%" stop-color="#C0C8D8"/><stop offset="100%" stop-color="#7B2FFF"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="player-role-badge">Polyvalent</div>
+        <div class="player-glow"></div>
+        <div class="player-overlay"></div>
+        <div class="player-body">
+          <p class="player-tag">JOUEUR 3</p>
+          <p class="player-real">Prénom Nom</p>
+          <div class="player-stats">
+            <div class="player-stat-item">
+              <div class="player-stat-val">SSL</div>
+              <div class="player-stat-lbl">Rang</div>
+            </div>
+            <div class="player-stat-item">
+              <div class="player-stat-val">—</div>
+              <div class="player-stat-lbl">Assists</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#333;margin-top:1.5rem;text-align:center;font-style:italic;">Remplacez les noms, pseudo et stats par ceux de vos joueurs.</p>
+  </div>
+</section>
+
+<!-- ABOUT ROCKET LEAGUE -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual">
+        <div class="rl-card">
+          <div class="rl-header">
+            <div class="rl-icon">🚀</div>
+            <div class="rl-title-wrap">
+              <h3>Rocket League</h3>
+              <p>Galaxy Sinks — Roster 2026</p>
+            </div>
+          </div>
+          <div class="rl-rank">
+            <span class="rank-label">Rang d'équipe</span>
+            <span class="rank-value">Grand Champion</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+          <div class="rl-rank">
+            <span class="rank-label">Tournois joués</span>
+            <span class="rank-value">À compléter</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+          <div class="rl-rank">
+            <span class="rank-label">Win rate</span>
+            <span class="rank-value">—%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(123,47,255,0.2);">
+            <p style="font-size:11px;color:#444;text-align:center;letter-spacing:1px;">GALAXY SINKS ESPORT • ROCKET LEAGUE</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-eyebrow">
+          <div class="eyebrow-dot"></div>
+          <span>Notre discipline</span>
+        </div>
+        <h2 class="section-title">ROCKET <span class="highlight">LEAGUE</span></h2>
+        <p>Galaxy Sinks est une équipe esport compétitive spécialisée en Rocket League. Nous visons les sommets des classements et participons aux tournois les plus prestigieux de la scène francophone et internationale.</p>
+        <p>Chaque match est une nouvelle opportunité de prouver que nous appartenons à l'élite de ce sport. Travail, cohésion et passion sont les valeurs fondamentales de notre organisation.</p>
+        <div class="about-features">
+          <div class="feature-item">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-text">
+              <h4>Précision</h4>
+              <p>Des mécaniques au niveau des meilleurs.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-text">
+              <h4>Teamwork</h4>
+              <p>La synergie avant tout.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📈</div>
+            <div class="feature-text">
+              <h4>Progression</h4>
+              <p>Toujours s'améliorer, chaque jour.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🌌</div>
+            <div class="feature-text">
+              <h4>Ambition</h4>
+              <p>Viser les étoiles, sans limite.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECRUTEMENT -->
+<section class="recruit-section" id="recruit">
+  <div class="container">
+    <div class="recruit-banner">
+      <div class="recruit-text">
+        <h2>TU VEUX REJOINDRE<br><span style="background:linear-gradient(135deg,#A060FF,#00D4FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">LA GALAXIE ?</span></h2>
+        <p>Galaxy Sinks recherche des joueurs passionnés, compétitifs et motivés. Que tu sois Grand Champion ou aspirant, si tu as la mentalité d'un gagnant, on veut te connaître.</p>
+      </div>
+      <div class="recruit-cta">
+        <a href="#contact" class="btn-primary" style="display:block;text-align:center;margin-bottom:1rem;">POSTULER</a>
+        <p style="font-size:11px;color:#444;text-align:center;letter-spacing:1px;">RANG MINIMUM : DIAMOND+</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span>Nous contacter</span>
+      </div>
+      <h2 class="section-title">CONTACT & <span class="highlight">RÉSEAUX</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-form">
+        <h3>ENVOIE UN MESSAGE</h3>
+        <div class="form-group">
+          <label>Pseudo / Nom</label>
+          <input type="text" placeholder="Ton pseudo Rocket League">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="ton@email.com">
+        </div>
+        <div class="form-group">
+          <label>Sujet</label>
+          <select>
+            <option>Candidature joueur</option>
+            <option>Partenariat / Sponsor</option>
+            <option>Question générale</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Présente-toi, ton rang, tes disponibilités..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;border:none;cursor:pointer;">ENVOYER ↗</button>
+      </div>
+      <div class="contact-info">
+        <h3>NOS RÉSEAUX</h3>
+        <div class="social-grid">
+          <a href="#" class="social-item">
+            <div class="social-icon tw">🐦</div>
+            <div class="social-text">
+              <h4>Twitter / X</h4>
+              <p>@GalaxySinks</p>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <a href="#" class="social-item">
+            <div class="social-icon yt">▶</div>
+            <div class="social-text">
+              <h4>YouTube</h4>
+              <p>Galaxy Sinks Esport</p>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <a href="#" class="social-item">
+            <div class="social-icon dc">💬</div>
+            <div class="social-text">
+              <h4>Discord</h4>
+              <p>discord.gg/galaxysinks</p>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <a href="#" class="social-item">
+            <div class="social-icon ig">📷</div>
+            <div class="social-text">
+              <h4>Instagram</h4>
+              <p>@GalaxySinks</p>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <a href="#" class="social-item">
+            <div class="social-icon tt">♪</div>
+            <div class="social-text">
+              <h4>TikTok</h4>
+              <p>@GalaxySinks</p>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap">
+        <svg width="32" height="32" viewBox="0 0 42 42" fill="none">
+          <polygon points="21,2 40,12 40,30 21,40 2,30 2,12" fill="none" stroke="url(#fhex)" stroke-width="1.5"/>
+          <text x="21" y="26" text-anchor="middle" fill="url(#ftxt)" font-family="Orbitron,monospace" font-size="11" font-weight="900">GS</text>
+          <defs>
+            <linearGradient id="fhex" x1="0" y1="0" x2="42" y2="42"><stop offset="0%" stop-color="#7B2FFF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+            <linearGradient id="ftxt" x1="0" y1="0" x2="42" y2="42"><stop offset="0%" stop-color="#A060FF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+          </defs>
+        </svg>
+        <span class="footer-logo-text">Galaxy Sinks</span>
+      </div>
+      <p>Club esport compétitif spécialisé en Rocket League. Propulsés au-delà des limites de la galaxie. #GalaxySinks</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#team">Équipe</a></li>
+        <li><a href="#about">Rocket League</a></li>
+        <li><a href="#recruit">Recrutement</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Réseaux</h4>
+      <ul>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">Discord</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Org</h4>
+      <ul>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Partenaires</a></li>
+        <li><a href="#">Rejoindre</a></li>
+        <li><a href="#">Presse</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Galaxy Sinks Esport. Tous droits réservés.</p>
+    <div class="footer-socials">
+      <a class="fsocial" href="#">TW</a>
+      <a class="fsocial" href="#">DC</a>
+      <a class="fsocial" href="#">YT</a>
+      <a class="fsocial" href="#">IG</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

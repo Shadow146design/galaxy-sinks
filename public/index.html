@@ -938,19 +938,43 @@ document.addEventListener('click',e=>{
   }
 });
 
+// ── VRAIE CONNEXION DISCORD ──
 function simulateLogin(){
-  // En prod: redirect vers Discord OAuth. Ici on simule INSANE (admin)
-  currentUser=DEMO_USERS[0];
-  renderTopbarAuth();
-  showToast('✓ Connecté en tant que '+currentUser.username+' · Rôles Discord vérifiés');
-  setTimeout(()=>showPage('profil'),800);
+  // Redirige vers le vrai OAuth Discord
+  window.location.href = '/auth/discord';
 }
 
-function logout(){
+async function logout(){
+  await fetch('/auth/logout', { method:'POST', credentials:'include' });
   currentUser=null;
   renderTopbarAuth();
   showPage('accueil');
   showToast('Déconnexion réussie');
+}
+
+// ── Vérifie si déjà connecté au chargement ──
+async function checkAuth(){
+  try {
+    const res = await fetch('/auth/me', { credentials:'include' });
+    const { user } = await res.json();
+    if(user){
+      currentUser = user;
+      // Adapter le format pour correspondre au frontend
+      currentUser.avatar = user.username ? user.username[0].toUpperCase() : '?';
+      currentUser.color = user.role === 'admin' ? '#FF40CC' :
+                          user.role === 'staff'  ? '#BF40FF' :
+                          user.role === 'coach'  ? '#00E5FF' : '#7FFF00';
+      renderTopbarAuth();
+      // Si retour après login Discord
+      if(window.location.search.includes('login=success')){
+        showToast('✓ Connecté en tant que '+user.username+' · Rôles Discord vérifiés');
+        setTimeout(()=>showPage('profil'), 500);
+        history.replaceState({}, '', '/');
+      }
+    }
+  } catch(e) {
+    console.log('Non connecté');
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -1209,7 +1233,7 @@ if(canvas){
 }
 
 // INIT
-renderTopbarAuth();
+checkAuth();
 renderLeaderboard();
 updateLbTimer();
 </script>

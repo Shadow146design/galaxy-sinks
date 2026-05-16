@@ -95,21 +95,28 @@ router.get('/discord/callback', async (req, res) => {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) console.error('Supabase error:', error);
 
     // 6. Stocker en session
-    req.session.userId = player.id;
+    req.session.userId = player?.id || discordUser.id;
     req.session.discordId = discordUser.id;
     req.session.role = siteRole;
+    req.session.username = discordUser.username;
+    req.session.avatar = avatarUrl;
+
+    // Sauvegarder la session explicitement
+    await new Promise((resolve) => req.session.save(resolve));
 
     // 7. Mettre à jour l'activité du site
-    await supabase
-      .from('players')
-      .update({
-        sessions_count: player.sessions_count + 1,
-        site_activity: Math.min(100, player.site_activity + 2),
-      })
-      .eq('id', player.id);
+    if (player?.id) {
+      await supabase
+        .from('players')
+        .update({
+          sessions_count: (player.sessions_count || 0) + 1,
+          site_activity: Math.min(100, (player.site_activity || 0) + 2),
+        })
+        .eq('id', player.id);
+    }
 
     res.redirect('/?login=success');
 
@@ -125,20 +132,48 @@ router.get('/me', async (req, res) => {
     return res.json({ user: null });
   }
   try {
+    // Essayer Supabase d'abord
     const { data: player, error } = await supabase
       .from('players')
       .select('*')
       .eq('id', req.session.userId)
       .single();
 
-    if (error || !player) return res.json({ user: null });
+    if (!error && player) {
+      await supabase.from('players').update({ last_seen: new Date().toISOString() }).eq('id', player.id);
+      return res.json({ user: player });
+    }
 
-    // Mettre à jour last_seen
-    await supabase.from('players').update({ last_seen: new Date().toISOString() }).eq('id', player.id);
+    // Fallback: utiliser les infos de session
+    if (req.session.username) {
+      return res.json({ user: {
+        id: req.session.userId,
+        discord_id: req.session.discordId,
+        username: req.session.username,
+        avatar_url: req.session.avatar,
+        role: req.session.role || 'membre',
+        mmr: 0, wins: 0, goals: 0, assists: 0,
+        rank_name: 'Non classé', weekly_score: 0,
+        site_activity: 0, is_verified: false
+      }});
+    }
 
-    res.json({ user: player });
+    res.json({ user: null });
   } catch (err) {
-    res.status(500).json({ error: 'Erreur serveur' });
+    // Fallback session
+    if (req.session.username) {
+      return res.json({ user: {
+        id: req.session.userId,
+        discord_id: req.session.discordId,
+        username: req.session.username,
+        avatar_url: req.session.avatar,
+        role: req.session.role || 'membre',
+        mmr: 0, wins: 0, goals: 0, assists: 0,
+        rank_name: 'Non classé', weekly_score: 0,
+        site_activity: 0, is_verified: false
+      }});
+    }
+    res.json({ user: null });
   }
 });
 

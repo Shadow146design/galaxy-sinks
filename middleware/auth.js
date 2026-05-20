@@ -1,46 +1,62 @@
-// ═══════════════════════════════════════════════
-//  middleware/auth.js — Vérification des permissions
-// ═══════════════════════════════════════════════
-
-// ── Vérifie que l'utilisateur est connecté ──
 function requireAuth(req, res, next) {
-  if (!req.session?.userId) {
-    return res.status(401).json({ error: 'Connexion requise', redirect: '/login' });
+  try {
+    const cookie = req.cookies?.gs_user;
+    if (!cookie) return res.status(401).json({ error: 'Connexion requise', redirect: '/login' });
+    const user = JSON.parse(cookie);
+    if (!user.loggedIn) return res.status(401).json({ error: 'Connexion requise' });
+    req.session = req.session || {};
+    req.session.userId = user.id;
+    req.session.role = user.role;
+    req.session.username = user.username;
+    next();
+  } catch(e) {
+    res.status(401).json({ error: 'Connexion requise' });
   }
-  next();
 }
 
-// ── Vérifie le rôle Admin ──
 function requireAdmin(req, res, next) {
-  if (!req.session?.userId) {
-    return res.status(401).json({ error: 'Connexion requise' });
+  try {
+    const cookie = req.cookies?.gs_user;
+    if (!cookie) return res.status(401).json({ error: 'Non autorisé' });
+    const user = JSON.parse(cookie);
+    if (user.role !== 'admin') return res.status(403).json({ error: 'Accès Admin requis' });
+    req.session = req.session || {};
+    req.session.userId = user.id;
+    req.session.role = user.role;
+    next();
+  } catch(e) {
+    res.status(403).json({ error: 'Non autorisé' });
   }
-  if (req.session.role !== 'admin') {
-    return res.status(403).json({ error: 'Accès réservé aux Admins' });
-  }
-  next();
 }
 
-// ── Vérifie le rôle Staff ou Admin ──
 function requireStaff(req, res, next) {
-  if (!req.session?.userId) {
-    return res.status(401).json({ error: 'Connexion requise' });
+  try {
+    const cookie = req.cookies?.gs_user;
+    if (!cookie) return res.status(401).json({ error: 'Non autorisé' });
+    const user = JSON.parse(cookie);
+    if (!['admin','staff'].includes(user.role)) return res.status(403).json({ error: 'Accès Staff requis' });
+    req.session = req.session || {};
+    req.session.userId = user.id;
+    req.session.role = user.role;
+    next();
+  } catch(e) {
+    res.status(403).json({ error: 'Non autorisé' });
   }
-  if (!['admin', 'staff'].includes(req.session.role)) {
-    return res.status(403).json({ error: 'Accès réservé aux Staff et Admins' });
-  }
-  next();
 }
 
-// ── Vérifie le rôle Coach, Staff ou Admin ──
 function requireCoach(req, res, next) {
-  if (!req.session?.userId) {
-    return res.status(401).json({ error: 'Connexion requise' });
+  try {
+    const cookie = req.cookies?.gs_user;
+    if (!cookie) return res.status(401).json({ error: 'Non autorisé' });
+    const user = JSON.parse(cookie);
+    if (!['admin','staff','coach'].includes(user.role)) return res.status(403).json({ error: 'Accès Coach requis' });
+    req.session = req.session || {};
+    req.session.userId = user.id;
+    req.session.role = user.role;
+    next();
+  } catch(e) {
+    res.status(403).json({ error: 'Non autorisé' });
   }
-  if (!['admin', 'staff', 'coach'].includes(req.session.role)) {
-    return res.status(403).json({ error: 'Accès réservé aux Coachs' });
-  }
-  next();
 }
 
 module.exports = { requireAuth, requireAdmin, requireStaff, requireCoach };

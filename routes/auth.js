@@ -40,7 +40,7 @@ router.get('/discord/callback', async (req, res) => {
         { headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` } }
       );
       const roles = memberRes.data.roles || [];
-      console.log('Roles Discord:', roles);
+      console.log('Roles Discord:', JSON.stringify(roles)); console.log('Admin ID:', process.env.DISCORD_ROLE_ADMIN); console.log('Match:', roles.includes(process.env.DISCORD_ROLE_ADMIN));
       for (const roleId of roles) {
         if (roleId === process.env.DISCORD_ROLE_CREATEUR || roleId === process.env.DISCORD_ROLE_ADMIN) { siteRole = 'admin'; break; }
         if (roleId === process.env.DISCORD_ROLE_STAFF)  { siteRole = 'staff';  break; }
@@ -77,3 +77,4 @@ router.post('/logout', (req, res) => { res.clearCookie('gs_user'); res.json({ su
 router.get('/sync-discord', (req, res) => { res.json({ success: true }); });
 
 module.exports = router;
+

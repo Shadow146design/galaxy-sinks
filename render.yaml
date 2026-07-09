@@ -1,0 +1,18 @@
+# Render Blueprint — déploiement du site statique Galaxy Sinks (Vite).
+# Render build sur Linux : il installe les dépendances, compile avec Vite,
+# et publie le dossier `dist`.
+services:
+  - type: web
+    name: galaxy-sinks
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    # Vite 8 nécessite Node 20+ — on force une version récente.
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    # Le site est mono-page : on renvoie index.html pour toute URL.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

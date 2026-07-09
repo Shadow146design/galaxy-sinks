@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Galaxy Sinks — Rocket League Esport</title>
+    <meta
+      name="description"
+      content="Galaxy Sinks — équipe et communauté Rocket League. L'épopée d'un crew passé de 10 à plus de 75 membres."
+    />
+
+    <!-- Open Graph / partage (Discord, réseaux) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Galaxy Sinks — Rocket League Esport" />
+    <meta
+      property="og:description"
+      content="L'épopée Galaxy Sinks : de 10 à plus de 75 membres en 3 mois. Rejoins le crew."
+    />
+    <meta property="og:image" content="/gs-logo.png" />
+    <meta name="theme-color" content="#03040f" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Galaxy Sinks — Rocket League Esport" />
+    <meta
+      name="twitter:description"
+      content="L'épopée Galaxy Sinks : de 10 à plus de 75 membres en 3 mois."
+    />
+    <meta name="twitter:image" content="/gs-logo.png" />
+  </head>
+  <body>
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <img class="loading-mark" src="/gs-logo.png" alt="" />
+        <p class="loading-title">GALAXY SINKS</p>
+        <div class="loading-bar"><span class="loading-bar-fill"></span></div>
+        <p class="loading-caption">Compiling shaders&hellip;</p>
+      </div>
+    </div>
+
+    <canvas id="app"></canvas>
+
+    <header class="hud">
+      <img class="hud-mark" src="/gs-logo.png" alt="Galaxy Sinks" />
+      <div class="hud-brand">
+        <h1 class="brand-title">GALAXY SINKS</h1>
+        <p class="brand-tagline">Where the void meets the game</p>
+      </div>
+      <nav class="hud-nav">
+        <a href="#histoire">Histoire</a>
+        <a href="#staff">Staff</a>
+        <a href="#video">Vidéo</a>
+        <a href="#stats">Stats</a>
+        <a href="#actu">Actu</a>
+        <a href="#matchs">Matchs</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="scroll-space">
+      <section class="phase phase-morph"></section>
+
+      <section class="phase phase-hold">
+        <div class="hero">
+          <p class="hero-kicker">Rocket League &middot; Esport</p>
+          <h2 class="hero-title">GALAXY SINKS</h2>
+          <p class="hero-tagline">De 10 à plus de 75 membres en 3 mois. L'épopée ne fait que commencer.</p>
+          <div class="hero-actions">
+            <a class="hero-cta" href="https://discord.gg/qdvY4hEHqT" target="_blank" rel="noopener">Rejoindre le Discord</a>
+            <a class="hero-ghost" href="#histoire">Découvrir l'épopée</a>
+          </div>
+          <p class="scroll-hint">Défilez pour explorer<span aria-hidden="true">&darr;</span></p>
+        </div>
+      </section>
+
+      <!-- 01 — Histoire -->
+      <section id="histoire" class="content-section phase-history">
+        <div class="section-header">
+          <p class="eyebrow reveal">01 &mdash; Histoire</p>
+          <h2 class="section-title">L'Épopée Galaxy Sinks</h2>
+        </div>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <div class="timeline-header reveal">
+              <span class="timeline-date">25 novembre 2017</span>
+              <h3 class="timeline-title">Création</h3>
+            </div>
+            <p class="timeline-text">Naissance officielle de Galaxy Sinks.</p>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-header reveal">
+              <span class="timeline-date">L'Âge d'Or</span>
+              <h3 class="timeline-title">GTA V</h3>
+            </div>
+            <p class="timeline-text">
+              Création du Crew, logo emblématique et premiers succès : le collectif atteint
+              80 membres.
+            </p>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-header reveal">
+              <span class="timeline-date">Il y a 3 mois</span>
+              <h3 class="timeline-title">La Renaissance</h3>
+            </div>
+            <p class="timeline-text">
+              Reconstruction totale après la suppression du serveur, avec un focus 100% Rocket
+              League.
+            </p>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-header reveal">
+              <span class="timeline-date">Aujourd'hui</span>
+              <h3 class="timeline-title">L'Ascension</h3>
+            </div>
+            <p class="timeline-text">De 10 à plus de 75 personnes en seulement 3 mois.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 02 — Staff -->
+      <section id="staff" class="content-section phase-staff">
+        <div class="section-header">
+          <p class="eyebrow reveal">02 &mdash; Organisation</p>
+          <h2 class="section-title">Le Staff</h2>
+        </div>
+
+        <div class="profiles-grid">
+          <article class="profile-card">
+            <div class="profile-card-top reveal">
+              <div class="profile-avatar" data-initials="I" aria-hidden="true"></div>
+              <p class="profile-role">Directeur eSport &middot; Fondateur</p>
+              <h3 class="profile-name">Ins4ne</h3>
+            </div>
+            <p class="profile-bio">
+              Fondateur de Galaxy Sinks. Meilleur ami et complice de toujours, Ins4ne porte la
+              vision eSport du crew et son énergie compétitive au quotidien.
+            </p>
+            <div class="profile-card-bottom reveal">
+              <ul class="profile-stats">
+                <li><span>Role</span>Fondateur</li>
+                <li><span>Focus</span>Direction eSport</li>
+                <li><span>Vibe</span>Clutch Factor</li>
+              </ul>
+              <div class="profile-socials">
+                <a href="#" class="social-pill">Twitch</a>
+                <a href="#" class="social-pill">Instagram</a>
+                <a href="https://discord.gg/qdvY4hEHqT" class="social-pill" target="_blank" rel="noopener">Discord</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="profile-card profile-card--alt">
+            <div class="profile-card-top reveal">
+              <div class="profile-avatar" data-initials="S" aria-hidden="true"></div>
+              <p class="profile-role">Administrateur WEB</p>
+              <h3 class="profile-name">Shadow</h3>
+            </div>
+            <p class="profile-bio">
+              Développeur du bot et du site de Galaxy Sinks. Passionné de sci-fi et de design
+              génératif, Shadow façonne l'univers visuel du projet — du bruit de shader jusqu'au
+              dernier pixel qui scintille.
+            </p>
+            <div class="profile-card-bottom reveal">
+              <ul class="profile-stats">
+                <li><span>Role</span>Admin WEB</li>
+                <li><span>Focus</span>Bot &amp; Site</li>
+                <li><span>Vibe</span>Night Owl</li>
+              </ul>
+              <div class="profile-socials">
+                <a href="#" class="social-pill">Twitch</a>
+                <a href="#" class="social-pill">Instagram</a>
+                <a href="https://discord.gg/qdvY4hEHqT" class="social-pill" target="_blank" rel="noopener">Discord</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="staff-roster">
+          <div class="roster-card reveal"><p class="roster-role">Administrateur Discord</p><h4 class="roster-name">EDEN</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Modérateur</p><h4 class="roster-name">Lucas</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Secrétaire</p><h4 class="roster-name">Chelli</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Vxice</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Luciano</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Mimi</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Sass</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Noriox</h4></div>
+          <div class="roster-card reveal"><p class="roster-role">Équipe Staff</p><h4 class="roster-name">Dodo</h4></div>
+        </div>
+      </section>
+
+      <!-- 03 — Pôle Vidéo -->
+      <section id="video" class="content-section phase-video">
+        <div class="section-header">
+          <p class="eyebrow reveal">03 &mdash; Contenu</p>
+          <h2 class="section-title">Pôle Vidéo &amp; Réseaux</h2>
+        </div>
+
+        <div class="video-grid">
+          <div class="video-card reveal">
+            <span class="video-icon" aria-hidden="true"></span>
+            <h3 class="video-name">INSANE</h3>
+            <p class="video-role">Vidéaste</p>
+          </div>
+          <div class="video-card reveal">
+            <span class="video-icon" aria-hidden="true"></span>
+            <h3 class="video-name">EDEN</h3>
+            <p class="video-role">Vidéaste</p>
+          </div>
+          <div class="video-card reveal">
+            <span class="video-icon" aria-hidden="true"></span>
+            <h3 class="video-name">Nagzag</h3>
+            <p class="video-role">Vidéaste</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 — Communauté & Stats -->
+      <section id="stats" class="content-section phase-stats">
+        <div class="section-header">
+          <p class="eyebrow reveal">04 &mdash; Communauté</p>
+          <h2 class="section-title">La Communauté en Chiffres</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-tile reveal">
+            <p class="stat-value">75+</p>
+            <p class="stat-label">Membres au total</p>
+          </div>
+          <div class="stat-tile reveal">
+            <p class="stat-value">51</p>
+            <p class="stat-label">Joueurs officiels</p>
+          </div>
+          <div class="stat-tile reveal">
+            <p class="stat-value">18</p>
+            <p class="stat-label">Visiteurs &amp; amis</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 — Actualités & Compétition -->
+      <section id="actu" class="content-section phase-news">
+        <div class="section-header">
+          <p class="eyebrow reveal">05 &mdash; Compétition</p>
+          <h2 class="section-title">Actualités</h2>
+        </div>
+
+        <div class="news-grid">
+          <article class="news-card reveal">
+            <p class="news-tag">Match en cours</p>
+            <h3 class="news-title">Galaxy Sinks <span>vs</span> RZN ESPORT</h3>
+          </article>
+
+          <article class="news-card news-card--event reveal">
+            <p class="news-tag">Événement</p>
+            <h3 class="news-title">Tournoi Grand Champion (1v1)</h3>
+            <p class="news-meta">Mercredi 13 mai &middot; 18h00</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 06 — Match History -->
+      <section id="matchs" class="content-section phase-matches">
+        <div class="section-header">
+          <p class="eyebrow reveal">06 &mdash; Performance</p>
+          <h2 class="section-title">Historique des Matchs</h2>
+        </div>
+
+        <div class="match-grid">
+          <div class="match-panel reveal">
+            <p class="news-tag">Progression &middot; exemple</p>
+            <svg
+              class="perf-chart"
+              viewBox="0 0 240 80"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Classement en hausse sur les 8 derniers matchs"
+            >
+              <polygon
+                class="perf-chart-area"
+                points="10,72 41.4,58.3 72.8,65.1 104.2,44.6 135.7,33.1 167.1,49.1 198.5,21.7 230,8 230,80 10,80"
+              />
+              <polyline
+                class="perf-chart-line"
+                points="10,72 41.4,58.3 72.8,65.1 104.2,44.6 135.7,33.1 167.1,49.1 198.5,21.7 230,8"
+              />
+              <circle class="perf-chart-dot" cx="230" cy="8" r="4" />
+            </svg>
+            <div class="chart-callout">
+              <p class="stat-value">1320</p>
+              <p class="stat-label">Points de classement &mdash; 8 derniers matchs</p>
+            </div>
+          </div>
+
+          <div class="match-panel match-panel--replay reveal">
+            <p class="news-tag">Bientôt disponible</p>
+            <h3 class="shop-title">Reprises vidéo des buts</h3>
+            <p class="panel-caption">
+              Les reprises vidéo de chaque but marqué viendront bientôt s'afficher ici.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 — Contact & Liens -->
+      <section id="contact" class="content-section phase-contact">
+        <div class="section-header">
+          <p class="eyebrow reveal">07 &mdash; Contact</p>
+          <h2 class="section-title">Rejoins Galaxy Sinks</h2>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-links reveal">
+            <a href="https://discord.gg/qdvY4hEHqT" class="social-pill social-pill--discord" target="_blank" rel="noopener">Discord</a>
+            <a href="#" class="social-pill">Twitch</a>
+            <a href="#" class="social-pill">Instagram</a>
+            <a href="#" class="social-pill">TikTok</a>
+            <a href="mailto:galaxy.sinks8@gmail.com" class="social-pill">Email</a>
+          </div>
+
+          <a
+            href="https://shop.galaxysinks.com"
+            class="shop-card reveal"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="shop-badge">Coming Soon</span>
+            <h3 class="shop-title">Boutique Galaxy Sinks</h3>
+          </a>
+        </div>
+
+        <footer class="site-footer reveal">
+          <p class="footer-logo">GALAXY SINKS</p>
+          <p class="footer-copy">&copy; 2026 Galaxy Sinks — Tous droits réservés.</p>
+        </footer>
+      </section>
+    </main>
+
+    <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-fill"></span></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

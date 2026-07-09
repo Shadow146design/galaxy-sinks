@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>404 — Perdu dans la galaxie · Galaxy Sinks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.4rem;
+        text-align: center;
+        padding: 2rem;
+        font-family: 'Rajdhani', sans-serif;
+        color: #f3f1fb;
+        background:
+          radial-gradient(1200px 600px at 50% -10%, rgba(90, 70, 200, 0.25), transparent 60%),
+          radial-gradient(900px 500px at 20% 110%, rgba(36, 150, 104, 0.18), transparent 60%),
+          #03040f;
+        overflow: hidden;
+      }
+      /* Champ d'étoiles léger en CSS pur */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+          radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+          radial-gradient(1.5px 1.5px at 70% 60%, #cfe8ff, transparent),
+          radial-gradient(1px 1px at 40% 80%, #fff, transparent),
+          radial-gradient(1px 1px at 85% 25%, #dfffe9, transparent),
+          radial-gradient(1.5px 1.5px at 60% 15%, #fff, transparent),
+          radial-gradient(1px 1px at 10% 70%, #e6d9ff, transparent);
+        opacity: 0.55;
+        z-index: 0;
+      }
+      .logo, .code, .msg, .home { position: relative; z-index: 1; }
+      .logo {
+        width: 5.5rem;
+        height: 5.5rem;
+        border-radius: 50%;
+        filter: drop-shadow(0 0 22px rgba(95, 216, 255, 0.5));
+      }
+      .code {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
+        font-size: clamp(3.5rem, 14vw, 7rem);
+        line-height: 1;
+        letter-spacing: 0.08em;
+        background: linear-gradient(90deg, #9b6bff, #5fd8ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 40px rgba(138, 91, 255, 0.35);
+      }
+      .msg {
+        max-width: 30rem;
+        font-size: clamp(1rem, 2.4vw, 1.2rem);
+        color: #a79fc4;
+      }
+      .home {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 0.4rem;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+        padding: 0.85rem 1.8rem;
+        border-radius: 999px;
+        background: linear-gradient(120deg, #5865f2, #8a5bff);
+        box-shadow: 0 0 22px rgba(88, 101, 242, 0.5);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .home:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 34px rgba(88, 101, 242, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <img class="logo" src="/gs-logo.png" alt="Galaxy Sinks" />
+    <p class="code">404</p>
+    <p class="msg">Cette page s'est perdue quelque part dans la galaxie. Elle n'existe pas (ou plus).</p>
+    <a class="home" href="/">Retour à l'accueil</a>
+  </body>
+</html>

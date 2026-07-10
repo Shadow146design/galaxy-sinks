@@ -223,6 +223,36 @@ const logoWatermark = createLogoWatermark()
 scene.add(logoWatermark.mesh)
 
 /**
+ * ── Cursor light ─────────────────────────────────────────────────────────
+ * A soft additive glow that follows the pointer, projected into the scene —
+ * as if the visitor carries a light through the nebula. Picked up by the
+ * bloom for a gentle interactive halo.
+ */
+const cursorGlowTexture = (() => {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const ctx = c.getContext('2d')
+  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64)
+  g.addColorStop(0, 'rgba(130, 210, 255, 0.5)')
+  g.addColorStop(0.4, 'rgba(90, 150, 255, 0.16)')
+  g.addColorStop(1, 'rgba(40, 30, 120, 0)')
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, 128, 128)
+  return new THREE.CanvasTexture(c)
+})()
+const cursorGlow = new THREE.Sprite(
+  new THREE.SpriteMaterial({
+    map: cursorGlowTexture,
+    transparent: true,
+    opacity: 0.3,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  }),
+)
+cursorGlow.scale.set(11, 11, 1)
+scene.add(cursorGlow)
+
+/**
  * ── Post-processing ──────────────────────────────────────────────────────
  * Just bloom (the intense "glow" on the logo and bright stars) + output.
  */
@@ -259,6 +289,12 @@ window.addEventListener('pointermove', (event) => {
  * deeper into the star field as you scroll, rising slightly, always looking
  * ahead. Damping in tick() keeps it smooth across abrupt scroll jumps.
  */
+// Brand palette stops the whole scene drifts through as you scroll — deep
+// green → teal → violet, echoing the logo, kept dark so it never washes out.
+const paletteA = [new THREE.Color('#0a5c42'), new THREE.Color('#0a4a5c'), new THREE.Color('#2a1f6e')]
+const paletteB = [new THREE.Color('#3a2c82'), new THREE.Color('#2c5a82'), new THREE.Color('#0a5c52')]
+const paletteBg = [new THREE.Color('#03040f'), new THREE.Color('#04060f'), new THREE.Color('#070512')]
+
 ScrollTrigger.create({
   trigger: '.scroll-space',
   start: 'top top',
@@ -272,6 +308,14 @@ ScrollTrigger.create({
     cameraTarget.y = THREE.MathUtils.lerp(0, 4, p)
     cameraLookTarget.z = cameraTarget.z - 30
     cameraLookTarget.y = cameraTarget.y * 0.6
+
+    // Drift the mood colours across the palette stops.
+    const seg = p * (paletteA.length - 1)
+    const i = Math.min(Math.floor(seg), paletteA.length - 2)
+    const t = seg - i
+    material.uniforms.uColorA.value.lerpColors(paletteA[i], paletteA[i + 1], t)
+    material.uniforms.uColorB.value.lerpColors(paletteB[i], paletteB[i + 1], t)
+    bgColor.lerpColors(paletteBg[i], paletteBg[i + 1], t)
   },
 })
 
@@ -381,6 +425,16 @@ function tick() {
   particlesRig.rotation.y += (-pointer.x * 0.12 - particlesRig.rotation.y) * 0.03
   particlesRig.rotation.x += (-pointer.y * 0.08 - particlesRig.rotation.x) * 0.03
 
+  // Nebula parallax — the coloured clouds drift on a slower, deeper layer
+  // than the stars, which reads as real depth.
+  nebulaClouds.group.rotation.y += (-pointer.x * 0.05 - nebulaClouds.group.rotation.y) * 0.02
+  nebulaClouds.group.rotation.x += (-pointer.y * 0.03 - nebulaClouds.group.rotation.x) * 0.02
+
+  // Warp: the star field's flow speeds up while scrolling fast, easing back
+  // to rest — a subtle "gliding faster through space" cue.
+  const warp = reducedMotion ? 0 : Math.min(Math.abs(lenis.velocity) * 0.02, 1.1)
+  material.uniforms.uSpeed.value += (params.speed + warp * 0.12 - material.uniforms.uSpeed.value) * 0.1
+
   // Camera damping (inertia) — ease toward the scroll-driven targets, plus a
   // small live parallax offset from the cursor.
   const parallaxX = pointer.x * 1.4
@@ -398,6 +452,17 @@ function tick() {
   const velocityBoost = Math.min(Math.abs(lenis.velocity) * 0.04, 0.8)
   bloomPass.strength += (params.bloomBaseStrength + velocityBoost - bloomPass.strength) * 0.15
   ambientPad.setIntensity(lenis.velocity)
+
+  // Place the cursor glow on a plane a fixed distance in front of the camera,
+  // mapping the pointer's -1..1 range to that plane's visible size.
+  const glowDepth = 12
+  const glowH = 2 * Math.tan((camera.fov * Math.PI) / 360) * glowDepth
+  const glowW = glowH * camera.aspect
+  cursorGlow.position.set(
+    camera.position.x + pointer.x * glowW * 0.5,
+    camera.position.y - pointer.y * glowH * 0.5,
+    camera.position.z - glowDepth,
+  )
 
   logoWatermark.update(clock.elapsedTime)
   spaceFogBackground.update(clock.elapsedTime)

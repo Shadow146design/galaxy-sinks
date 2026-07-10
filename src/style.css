@@ -234,11 +234,11 @@ body {
 }
 
 .phase-morph {
-  height: 200vh;
+  height: 110vh;
 }
 
 .phase-hold {
-  height: 200vh;
+  height: 140vh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1241,4 +1241,70 @@ body {
     transform: none !important;
     filter: none !important;
   }
+}
+
+/**
+ * ── Densification & richesse visuelle ───────────────────────────────────
+ * Espacement resserré (le site paraissait trop vide) + plus de détails :
+ * halo de fond par section, accent sous les titres, cartes vivantes au survol.
+ */
+.content-section {
+  padding: clamp(3.25rem, 8vw, 6rem) clamp(1.25rem, 6vw, 4rem);
+  position: relative;
+}
+
+/* Halo de fond diffus derrière chaque section — donne de la profondeur au
+   contenu au lieu de simples cartes sur du vide. */
+.content-section::before {
+  content: '';
+  position: absolute;
+  inset: 10% -10% auto -10%;
+  height: 60%;
+  background: radial-gradient(60% 60% at 50% 30%, color-mix(in srgb, var(--section-accent) 12%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.section-header {
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Petit accent lumineux sous le titre de section. */
+.section-header::after {
+  content: '';
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  margin-top: 1rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--neon-violet), var(--neon-cyan));
+  box-shadow: 0 0 12px var(--section-accent);
+}
+
+.timeline-item {
+  padding-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Toutes les cartes vitrées prennent vie au survol : léger soulèvement +
+   bordure et halo à la couleur d'accent de la section. */
+.roster-card,
+.video-card,
+.news-card,
+.stat-tile,
+.match-panel,
+.shop-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.roster-card:hover,
+.video-card:hover,
+.news-card:hover,
+.stat-tile:hover,
+.match-panel:hover {
+  transform: translateY(-4px);
+  border-color: var(--section-accent);
+  box-shadow: 0 12px 34px -12px var(--section-accent);
 }

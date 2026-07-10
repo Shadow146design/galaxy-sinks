@@ -356,6 +356,29 @@ document.querySelectorAll('.hud-nav a').forEach((link) => {
 })
 
 /**
+ * ── Sons d'interaction ───────────────────────────────────────────────────
+ * On réutilise la nappe synthé : un petit "blip" au survol, un "boost"
+ * (whoosh façon Rocket League) au clic, et un whoosh à l'arrivée de chaque
+ * section. Audible seulement après le premier scroll (déverrouillage audio).
+ */
+document.querySelectorAll('.hud-nav a, .hero-cta, .hero-ghost, .social-pill').forEach((el) => {
+  el.addEventListener('pointerenter', () => ambientPad.playTick(), { passive: true })
+})
+document.querySelectorAll('.hud-nav a, .hero-cta, .hero-ghost, .social-pill, .shop-card').forEach((el) => {
+  el.addEventListener('click', () => ambientPad.playBoost())
+})
+
+// Un whoosh discret quand chaque section entre à l'écran.
+document.querySelectorAll('.content-section').forEach((section) => {
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top center',
+    onEnter: () => ambientPad.playBoost(),
+    onEnterBack: () => ambientPad.playBoost(),
+  })
+})
+
+/**
  * ── Resize ───────────────────────────────────────────────────────────────
  */
 let resizeSettleTimeout

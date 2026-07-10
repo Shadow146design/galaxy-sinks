@@ -57,7 +57,10 @@ window.addEventListener('keydown', unlockAmbientPad, { once: true, passive: true
 // Wait for the real fonts before measuring scroll positions / splitting text.
 document.fonts?.ready.then(() => {
   ScrollTrigger.refresh()
-  setupTypewriterReveal('.section-title', { type: 'words', stagger: 0.06, duration: 0.5, onTick: () => ambientPad.playTick() })
+  // NB : on ne découpe PLUS les titres (ni en lettres, ni en mots) — c'est ce
+  // qui les faisait casser en plein mot ("Actualité"/"s"). Les titres portent
+  // la classe .reveal et apparaissent d'un bloc en fondu. Seule la prose, en
+  // paragraphes, garde l'apparition mot à mot (aucun risque de coupure là).
   setupTypewriterReveal('.timeline-text, .profile-bio', { type: 'words', stagger: 0.035, duration: 0.5, onTick: () => ambientPad.playTick() })
 })
 

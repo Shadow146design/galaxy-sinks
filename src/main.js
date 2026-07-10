@@ -57,7 +57,7 @@ window.addEventListener('keydown', unlockAmbientPad, { once: true, passive: true
 // Wait for the real fonts before measuring scroll positions / splitting text.
 document.fonts?.ready.then(() => {
   ScrollTrigger.refresh()
-  setupTypewriterReveal('.section-title', { type: 'chars', stagger: 0.02, duration: 0.4, onTick: () => ambientPad.playTick() })
+  setupTypewriterReveal('.section-title', { type: 'words', stagger: 0.06, duration: 0.5, onTick: () => ambientPad.playTick() })
   setupTypewriterReveal('.timeline-text, .profile-bio', { type: 'words', stagger: 0.035, duration: 0.5, onTick: () => ambientPad.playTick() })
 })
 
@@ -449,27 +449,41 @@ function tick() {
   particlesRig.rotation.x += (-pointer.y * 0.08 - particlesRig.rotation.x) * 0.03
 
   // Nebula parallax — the coloured clouds drift on a slower, deeper layer
-  // than the stars, which reads as real depth.
+  // than the stars, which reads as real depth, plus a constant slow swirl so
+  // the background is never fully still.
   nebulaClouds.group.rotation.y += (-pointer.x * 0.05 - nebulaClouds.group.rotation.y) * 0.02
   nebulaClouds.group.rotation.x += (-pointer.y * 0.03 - nebulaClouds.group.rotation.x) * 0.02
+  if (!reducedMotion) nebulaClouds.group.rotation.z += 0.0005
 
   // Warp: the star field's flow speeds up while scrolling fast, easing back
   // to rest — a subtle "gliding faster through space" cue.
   const warp = reducedMotion ? 0 : Math.min(Math.abs(lenis.velocity) * 0.02, 1.1)
   material.uniforms.uSpeed.value += (params.speed + warp * 0.12 - material.uniforms.uSpeed.value) * 0.1
 
+  // Idle cinematic drift — comme un edit anime, la scène bouge en continu
+  // même sans scroller : traveling lent gauche/droite, respiration
+  // avant/arrière, léger bob vertical.
+  const it = clock.elapsedTime
+  const idleX = reducedMotion ? 0 : Math.sin(it * 0.13) * 1.9
+  const idleY = reducedMotion ? 0 : Math.sin(it * 0.09 + 1.0) * 0.7
+  const idleZ = reducedMotion ? 0 : Math.sin(it * 0.07) * 1.2
+
   // Camera damping (inertia) — ease toward the scroll-driven targets, plus a
-  // small live parallax offset from the cursor.
-  const parallaxX = pointer.x * 1.4
-  const parallaxY = -pointer.y * 0.9
-  camera.position.x += (cameraTarget.x + parallaxX - camera.position.x) * 0.045
-  camera.position.y += (cameraTarget.y + parallaxY - camera.position.y) * 0.045
-  camera.position.z += (cameraTarget.z - camera.position.z) * 0.045
+  // live cursor parallax and the idle drift above.
+  const parallaxX = pointer.x * 1.9
+  const parallaxY = -pointer.y * 1.15
+  camera.position.x += (cameraTarget.x + parallaxX + idleX - camera.position.x) * 0.045
+  camera.position.y += (cameraTarget.y + parallaxY + idleY - camera.position.y) * 0.045
+  camera.position.z += (cameraTarget.z + idleZ - camera.position.z) * 0.03
 
   cameraLook.x += (cameraLookTarget.x - cameraLook.x) * 0.05
   cameraLook.y += (cameraLookTarget.y - cameraLook.y) * 0.05
   cameraLook.z += (cameraLookTarget.z - cameraLook.z) * 0.05
   camera.lookAt(cameraLook.x, cameraLook.y, cameraLook.z)
+
+  // Micro dutch-angle sway layered after lookAt — la petite inclinaison
+  // "edit" qui donne du caractère au cadrage.
+  if (!reducedMotion) camera.rotation.z += Math.sin(it * 0.11) * 0.014
 
   // Bloom breathes with scroll speed — glows a touch more the faster you glide.
   const velocityBoost = Math.min(Math.abs(lenis.velocity) * 0.04, 0.8)

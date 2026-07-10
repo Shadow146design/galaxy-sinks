@@ -1,19 +1,10 @@
 import { defineConfig } from 'vite'
 
-// On sépare les grosses librairies dans leurs propres fichiers ("chunks").
-// Avantage : le navigateur les garde en cache entre deux visites, et seuls
-// tes propres fichiers (petits) sont retéléchargés quand tu mets le site à
-// jour — le gros three.js n'est rechargé que s'il change vraiment.
+// Config minimale : on relève juste le seuil d'avertissement de taille de
+// chunk (three.js est volumineux, c'est normal). Pas de manualChunks : le
+// nouveau moteur de build de Vite 8 (rolldown) ne prend pas le format objet.
 export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1200,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          three: ['three'],
-          animation: ['gsap', 'lenis'],
-        },
-      },
-    },
   },
 })

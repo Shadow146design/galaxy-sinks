@@ -15,7 +15,7 @@ Le design est prêt ; il manque surtout tes vraies infos à la place des exemple
 
 - **Liens réseaux réels** : remplacer les `href="#"` (Twitch, Instagram, TikTok, YouTube) par les vraies URLs de la team.
 - **Roster des joueurs** : pour chaque joueur → pseudo, rôle/poste, rang Rocket League, éventuellement un avatar ou une photo.
-- **Staff** : vérifier/compléter les membres (Ins4ne, Shadow, EDEN, etc.) et leurs liens.
+- **Staff** : vérifier/compléter les membres (INSANE, Shadow, etc.) et leurs liens.
 - **Stats réelles** : nombre de membres, joueurs, victoires — chiffres à jour.
 - **Historique / résultats de matchs** : vrais scores et adversaires au lieu de l'exemple.
 - **Boutique** : brancher le vrai lien quand elle sera prête (sinon garder « Coming Soon »).

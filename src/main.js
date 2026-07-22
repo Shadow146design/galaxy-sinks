@@ -382,6 +382,44 @@ document.querySelectorAll('.content-section').forEach((section) => {
 })
 
 /**
+ * ── Compteurs animés ─────────────────────────────────────────────────────
+ * Les chiffres (75+, 51, 18, 1320…) montent de 0 quand ils entrent à l'écran.
+ */
+document.querySelectorAll('.stat-value').forEach((el) => {
+  const match = el.textContent.trim().match(/^(\d[\d\s]*)(.*)$/)
+  if (!match) return
+  const target = parseInt(match[1].replace(/\s/g, ''), 10)
+  const suffix = match[2] || ''
+  const counter = { v: 0 }
+  el.textContent = `0${suffix}`
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 90%',
+    once: true,
+    onEnter: () =>
+      gsap.to(counter, {
+        v: target,
+        duration: 1.4,
+        ease: 'power2.out',
+        onUpdate: () => {
+          el.textContent = `${Math.round(counter.v)}${suffix}`
+        },
+      }),
+  })
+})
+
+/**
+ * ── Bouton retour en haut ────────────────────────────────────────────────
+ */
+const toTopButton = document.querySelector('#to-top')
+if (toTopButton) {
+  toTopButton.addEventListener('click', () => lenis.scrollTo(0))
+  lenis.on('scroll', ({ scroll }) => {
+    toTopButton.classList.toggle('is-visible', scroll > window.innerHeight * 0.8)
+  })
+}
+
+/**
  * ── Resize ───────────────────────────────────────────────────────────────
  */
 let resizeSettleTimeout

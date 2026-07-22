@@ -420,6 +420,51 @@ if (toTopButton) {
 }
 
 /**
+ * ── Actualités dynamiques ────────────────────────────────────────────────
+ * Les actus sont chargées depuis /news.json à chaque visite. Pour les mettre
+ * à jour : édite public/news.json (aucun code à toucher) puis push. Si le
+ * fichier ne se charge pas, les cartes écrites en dur dans le HTML restent
+ * affichées en secours.
+ */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+async function loadNews() {
+  const grid = document.querySelector('#news-grid')
+  if (!grid) return
+  try {
+    const res = await fetch('news.json', { cache: 'no-cache' })
+    if (!res.ok) return
+    const data = await res.json()
+    if (!Array.isArray(data.items) || data.items.length === 0) return
+
+    grid.innerHTML = data.items
+      .map((item) => {
+        const eventClass = item.event ? ' news-card--event' : ''
+        const meta = item.meta ? `<p class="news-meta">${escapeHtml(item.meta)}</p>` : ''
+        return `
+          <article class="news-card${eventClass}">
+            <p class="news-tag">${escapeHtml(item.tag || 'Actu')}</p>
+            <h3 class="news-title">${escapeHtml(item.title || '')}</h3>
+            ${meta}
+          </article>`
+      })
+      .join('')
+
+    ScrollTrigger.refresh()
+  } catch (err) {
+    // Garde les cartes de secours déjà présentes dans le HTML.
+  }
+}
+
+loadNews()
+
+/**
  * ── Resize ───────────────────────────────────────────────────────────────
  */
 let resizeSettleTimeout

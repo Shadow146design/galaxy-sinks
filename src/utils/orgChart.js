@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrgLineShader } from '../shaders/orgLine.js'
 
 const SEGMENTS = 24
-const ROSTER_NAMES = ['Lucas', 'Chelli', 'Vxice', 'Luciano', 'Mimi', 'Sass', 'Noriox']
+const ROSTER_NAMES = ['Lucas', 'Chelli', 'Vxice', 'Luciano', 'Mimi', 'Sass']
 
 // The three-color cycle every connector line and the hub itself pulse
 // through — the brand's own palette, not an arbitrary rainbow, so the
